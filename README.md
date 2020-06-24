@@ -21,6 +21,7 @@ Watch me roam is a travel log allowing users to display their itinerary on a map
 - add automatic weather display for each step
 - trip overview and map over view on the same page (flex box?)
 - add a new stop by starting on clicking on a country on a map
+- add 'comment' and 'like' buttons on each stop for followers
 
 ## Models
 
