@@ -1,13 +1,15 @@
 # Watch me roam
 
 ## Description
-Watch me roam is a travel log allowing users to display their itinerary on a map by registering each stop they make with location, date, description and pictures. They can share the link to beloved ones or publically so non-users can follow along during the trip.
+Watch me roam is a travel log allowing users to display their itinerary on a map by registering each stop they make with location, date, description and pictures. They can share the link to non-users so they can follow along during the trip.
 
 ## MVP 
 - authorization/authentification
 - home page with all trips listed
+- 'add new trip' page
+- 'edit trip' page
 - 'add new stop' page
-- 'edit a stop' page
+- 'edit stop' page
 - 'trip overview' page with all stops of one trip listed
 - 'map overview' page with all the stops displayed and linked on the map
 
@@ -19,10 +21,10 @@ Watch me roam is a travel log allowing users to display their itinerary on a map
 - add automatic weather display for each step
 - trip overview and map over view on the same page (flex box?)
 
-
 ## Models
 
 - UserModel {username, email, password}
+- TripModel {name, description, start date, end date}
 - StopModel {location, name, date, description, pictures}
 
 
@@ -32,6 +34,8 @@ Watch me roam is a travel log allowing users to display their itinerary on a map
 - 'signup'  =>  Sign up page
 - 'signin'  =>  Sign in page
 - 'home'  =>  Home page with all the trips listed
+- 'createTrip' => create new trip page
+- 'editTrip' => edit trip page
 - 'tripOverview' => page with all stops of one trip listed
 - 'map' => page with all the stops displayed and linked on the map
 - 'createStop'  =>  Page to create a new stop
