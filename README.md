@@ -20,6 +20,7 @@ Watch me roam is a travel log allowing users to display their itinerary on a map
 - add a key to the stopModel 'people' and link it to a new model 'people' where information about peoplethe user is travelling with
 - add automatic weather display for each step
 - trip overview and map over view on the same page (flex box?)
+- add a new stop by starting on clicking on a country on a map
 
 ## Models
 
