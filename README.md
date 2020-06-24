@@ -8,10 +8,11 @@ Watch me roam is a travel log allowing users to display their itinerary on a map
 - home page with all trips listed
 - 'add new trip' page
 - 'edit trip' page
-- 'add new stop' page
-- 'edit stop' page
 - 'trip overview' page with all stops of one trip listed
 - 'map overview' page with all the stops displayed and linked on the map
+- 'view stop details' page
+- 'add new stop' page
+- 'edit stop' page
 
 
 ## Backlog
@@ -39,6 +40,7 @@ Watch me roam is a travel log allowing users to display their itinerary on a map
 - 'createTrip' => create new trip page
 - 'editTrip' => edit trip page
 - 'tripOverview' => page with all stops of one trip listed
+- 'stopDetails' => page with all the details of one stop (Name, city, country, description, pictures)
 - 'map' => page with all the stops displayed and linked on the map
 - 'createStop'  =>  Page to create a new stop
 - 'editStop/:id'  =>  Page to edit a stop
