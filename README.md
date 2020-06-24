@@ -13,6 +13,7 @@ Watch me roam is a travel log allowing users to display their itinerary on a map
 - 'view stop details' page
 - 'add new stop' page
 - 'edit stop' page
+- start date of a stop can not be before start date of the trip
 
 
 ## Backlog
