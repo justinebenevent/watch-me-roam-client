@@ -46,15 +46,15 @@ Watch me roam is a travel log allowing users to display their itinerary on a map
 | `/`                       | SplashPage                     | public `<Route>`            | Home page                                                      |
 | `/signup`                 | SignupPage                     | anon only  `<AnonRoute>`    | Signup form, link to login, navigate to homepage after signup  |
 | `/signin`                 | SigninPage                     | anon only `<AnonRoute>`     | Login form, link to signup, navigate to homepage after login   |
-| `/logout`                 | n/a                            | user only `<PrivateRoute>`  | Navigates to landing after logout, expire session              |
-| `/home`                   | NavBar, ElementList, FooterBar | user only `<PrivateRoute>`  | Desplays all trips                                             |
-| `/createTrip`             | NavBar, ElementList, FooterBar | user only `<PrivateRoute>`  | Adds an element                                                |
-| `/editTrip`               | NavBar, ElementList, FooterBar | user only `<PrivateRoute>`  | Edits an element                                               |
-| `/tripOverview`           | SearchForm, SearchResults      | user only  `<PrivateRoute>` | Desplays all stops from a trip                                 |
-| `/stopDetails`            | SearchForm, SearchResults      | user only `<PrivateRoute>`  | Desplays details of a specific stop                            |
-| `/map`                    | SearchForm, SearchResults      | user only `<PrivateRoute>`  | Desplays the map with all the stops locations                  |
-| `/createStop`             | ElementInfo                    | user only `<PrivateRoute>`  | Adds an element                                                |
-| `/editStop`               | Profile, Stats                 | user only  `<PrivateRoute>` | Edits an element                                               |
+| `/logout`                 | button                         | user only `<PrivateRoute>`  | Navigates to landing after logout, expire session              |
+| `/home`                   |                                | user only `<PrivateRoute>`  | Desplays all trips                                             |
+| `/createTrip`             |                                | user only `<PrivateRoute>`  | Adds an element                                                |
+| `/editTrip`               |                                | user only `<PrivateRoute>`  | Edits an element                                               |
+| `/tripOverview`           |                                | user only  `<PrivateRoute>` | Desplays all stops from a trip                                 |
+| `/stopDetails`            | ElementInfo                    | user only `<PrivateRoute>`  | Desplays details of a specific stop                            |
+| `/map`                    |                                | user only `<PrivateRoute>`  | Desplays the map with all the stops locations                  |
+| `/createStop`             | Form                           | user only `<PrivateRoute>`  | Adds an element                                                |
+| `/editStop`               | Form                           | user only  `<PrivateRoute>` | Edits an element                                               |
     
 
 ## Routes
