@@ -1,68 +1,94 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Watch me roam
 
-## Available Scripts
+## Description
+Watch me roam is a travel log allowing users to display their itinerary on a map by registering each stop they make with location, date, description and pictures. They can share the link to non-users so they can follow along during the trip.
 
-In the project directory, you can run:
+## MVP 
+- authorization/authentification
+- home page with all trips listed
+- 'add new trip' page
+- 'edit trip' page
+- 'trip overview' page with all stops of one trip listed
+- 'map overview' page with all the stops displayed and linked on the map
+- 'view stop details' page
+- 'add new stop' page
+- 'edit stop' page
+- start date of a stop can not be before start date of the trip
 
-### `npm start`
+## User Stories
+-  **404:** As an anon/user I can see a 404 page if I try to reach a page that does not exist so that I know it's my fault
+-  **Signup:** As an anon I can sign up in the platform so that I can start creating and managing my backlog
+-  **Login:** As a user I can login to the platform so that I can start creating and managing my backlog
+-  **Logout:** As a user I can logout from the platform so no one else can modify my information
+-  **Add elements** As a user I can add elements to my backlog
+-  **Delete elements** As a user I can delete elements from my backlog
+-  **Edit elements** As a user I can edit elements from my backlog
+-  **Check overview and map of a trip** As a user I can check my stops overview and map
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
+## Backlog
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- statistics page (how many countries visited, how many km, flags, continent)
+- add a key to the stopModel 'people' and link it to a new model 'people' where information about peoplethe user is travelling with
+- add automatic weather display for each step
+- trip overview and map over view on the same page (flex box?)
+- add a new stop by starting on clicking on a country on a map
+- add 'comment' and 'like' buttons on each stop for followers
 
-### `npm run build`
+<br>
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Client / Frontend
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## React Router Routes (React App)
+| Path                      | Component                      | Permissions                 | Behavior                                                       |
+| ------------------------- | --------------------           | -----------                 | ------------------------------------------------------------   |
+| `/`                       | SplashPage                     | public `<Route>`            | Home page                                                      |
+| `/signup`                 | SignupPage                     | anon only  `<AnonRoute>`    | Signup form, link to login, navigate to homepage after signup  |
+| `/signin`                 | SigninPage                     | anon only `<AnonRoute>`     | Login form, link to signup, navigate to homepage after login   |
+| `/logout`                 | button                         | user only `<PrivateRoute>`  | Navigates to landing after logout, expire session              |
+| `/home`                   |                                | user only `<PrivateRoute>`  | Desplays all trips                                             |
+| `/createTrip`             |                                | user only `<PrivateRoute>`  | Adds an element                                                |
+| `/editTrip`               |                                | user only `<PrivateRoute>`  | Edits an element                                               |
+| `/tripOverview`           |                                | user only  `<PrivateRoute>` | Desplays all stops from a trip                                 |
+| `/stopDetails`            | ElementInfo                    | user only `<PrivateRoute>`  | Desplays details of a specific stop                            |
+| `/map`                    |                                | user only `<PrivateRoute>`  | Desplays the map with all the stops locations                  |
+| `/createStop`             | Form                           | user only `<PrivateRoute>`  | Adds an element                                                |
+| `/editStop`               | Form                           | user only  `<PrivateRoute>` | Edits an element                                               |
+    
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Routes
 
-### `npm run eject`
+- '/'  => Landing page
+- 'signup'  =>  Sign up page
+- 'signin'  =>  Sign in page
+- 'home'  =>  Home page with all the trips listed
+- 'createTrip' => create new trip page
+- 'editTrip' => edit trip page
+- 'tripOverview' => page with all stops of one trip listed
+- 'stopDetails' => page with all the details of one stop (Name, city, country, description, pictures)
+- 'map' => page with all the stops displayed and linked on the map
+- 'createStop'  =>  Page to create a new stop
+- 'editStop/:id'  =>  Page to edit a stop
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Models
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- UserModel {username, email, password}
+- TripModel {name, description, start date, end date}
+- StopModel {location, name, date, description, pictures}
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Links
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### GitHub Projects
+[GitHub projects]
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+### Git
+- [GitHub Repo](https://github.com/justinebenevent/watch-me-roam/)
+- [Heroku]
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### Slides
+[Google Slides]
