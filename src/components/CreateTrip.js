@@ -21,10 +21,7 @@ export default function CreateTrip(props) {
             id="description"
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="image">Image</label>
-          <input type="file" className="form-control" name="image" id="image" />
-        </div>
+
         <button type="submit" className="btn btn-primary">
           Create
         </button>

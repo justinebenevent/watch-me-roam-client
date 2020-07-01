@@ -3,31 +3,33 @@ import React from "react";
 export default function Signup(props) {
   return (
     <>
-      <form onSubmit>
+      <form onSubmit={props.onSignUp}>
+        <h2>Sign Up</h2>
         <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
+          <label for="username">Name</label>
+          <input
+            type="name"
+            class="form-control"
+            id="username"
+            placeholder="Archer"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email address</label>
           <input
             type="email"
             class="form-control"
-            id="exampleInputEmail1"
+            id="email"
             aria-describedby="emailHelp"
+            placeholder="blabla@blabla.com"
           />
         </div>
 
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            id="exampleInputPassword1"
-          />
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" />
         </div>
-        <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-          <label class="form-check-label" for="exampleCheck1">
-            Check me out
-          </label>
-        </div>
+
         <button type="submit" class="btn btn-primary">
           Submit
         </button>
