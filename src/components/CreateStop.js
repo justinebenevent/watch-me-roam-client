@@ -9,6 +9,15 @@ export default function CreateStop(props) {
     <>
       <form onSubmit={props.onAdd}>
         <div className="form-group">
+          <label htmlFor="location">Location</label>
+          <input
+            type="text"
+            className="form-control"
+            name="location"
+            id="location"
+          />
+        </div>
+        <div className="form-group">
           <label htmlFor="name">Name</label>
           <input type="text" className="form-control" name="name" id="name" />
         </div>
@@ -19,6 +28,15 @@ export default function CreateStop(props) {
             className="form-control"
             name="description"
             id="description"
+          />
+        </div>
+        <div className="form-group">
+          <label for="startDate">Start date</label>
+          <input
+            type="date"
+            className="form-control"
+            name="startDate"
+            id="startDate"
           />
         </div>
         <div className="form-group">

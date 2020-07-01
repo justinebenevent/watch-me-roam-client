@@ -1,12 +1,11 @@
 import React, { Component } from "react";
+import "./Landing.css";
 
 export default class Landing extends Component {
   render() {
     return (
       <div className="landing">
-        {/* <div>
-          <img src="../../public/bg-picture.jpg" alt="background"></img>
-        </div> */}
+        <h1>Watch me roam</h1>
         <a href="/signup">
           <button type="button" class="btn btn-outline-dark">
             Sign up

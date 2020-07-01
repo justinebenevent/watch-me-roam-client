@@ -24,10 +24,11 @@ export default class EditTrip extends React.Component {
     let id = this.props.match.params.id;
     axios
       .patch(
-        `${config.API_URL}/trips/${id}`,
+        `${config.API_URL}/editTrip/${id}`,
         {
           name: this.state.trip.name,
           description: this.state.trip.description,
+          startDate: this.state.trip.startDate,
         },
         { withCredentials: true }
       )
@@ -54,9 +55,18 @@ export default class EditTrip extends React.Component {
     });
   };
 
+  handleDateChange = (e) => {
+    let newTrip = JSON.parse(JSON.stringify(this.state.trip));
+    newTrip.startDate = e.target.value;
+
+    this.setState({
+      trip: newTrip,
+    });
+  };
+
   render() {
     if (!this.props.loggedInUser) {
-      return <Redirect to="/sign-in" />;
+      return <Redirect to="/signin" />;
     }
     if (!this.state.trip) {
       return (
@@ -67,7 +77,7 @@ export default class EditTrip extends React.Component {
         </div>
       );
     }
-    const { name, description } = this.state.trip;
+    const { name, description, startDate } = this.state.trip;
     return (
       <>
         <form>
@@ -94,14 +104,14 @@ export default class EditTrip extends React.Component {
             />
           </div>
           <div class="form-group">
-            <label htmlFor="description">Pictures</label>
+            <label htmlFor="startDate">Start date</label>
             <input
-              type="img"
+              type="date"
               class="form-control"
-              onChange={this.handleImgChange}
-              name="description"
-              id="description"
-              value={description}
+              onChange={this.handleDateChange}
+              name="startDate"
+              id="startDate"
+              value={startDate}
             />
           </div>
           <button
@@ -109,7 +119,7 @@ export default class EditTrip extends React.Component {
             class="btn btn-primary"
             onClick={this.handleEditTrip}
           >
-            Submit
+            Confirm change
           </button>
         </form>
       </>

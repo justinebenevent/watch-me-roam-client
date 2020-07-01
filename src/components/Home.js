@@ -28,9 +28,6 @@ export default class Home extends React.Component {
   render() {
     return (
       <>
-        <div>
-          <Link to={"/createtrip"}>link to createTrip</Link>
-        </div>
         {!this.state.trips.length && this.state.failedToLoad ? (
           <p>No trips yet</p>
         ) : null}

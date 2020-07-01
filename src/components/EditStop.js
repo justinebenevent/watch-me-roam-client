@@ -22,18 +22,38 @@ export default class EditStop extends React.Component {
   handleEditStop = (e) => {
     e.preventDefault();
     let id = this.props.match.params.id;
+    // let uploadData = new FormData();
+    // uploadData.append("imageUrl", image)
     axios
       .patch(
-        `${config.API_URL}/stops/${id}`,
+        `${config.API_URL}/editStop/${id}`,
         {
+          location: this.state.stop.location,
           name: this.state.stop.name,
           description: this.state.stop.description,
+          startDate: this.state.stop.startDate,
+          image: this.state.stop.image,
         },
         { withCredentials: true }
+
+        //cloudinary request
+        // .post(`${config.API_URL}/upload`, uploadData).then((res) => {
+        //     console.log(res);
+        //     //Send the image to server here if needed with any other axios call
+        //   });
       )
       .then((res) => {
         //redirect to App.js
       });
+  };
+
+  handleLocationChange = (e) => {
+    let newStop = JSON.parse(JSON.stringify(this.state.stop));
+    newStop.location = e.target.value;
+
+    this.setState({
+      stop: newStop,
+    });
   };
 
   handleNameChange = (e) => {
@@ -54,9 +74,27 @@ export default class EditStop extends React.Component {
     });
   };
 
+  handleDateChange = (e) => {
+    let newStop = JSON.parse(JSON.stringify(this.state.stop));
+    newStop.startDate = e.target.value;
+
+    this.setState({
+      stop: newStop,
+    });
+  };
+
+  handleImageChange = (e) => {
+    let newStop = JSON.parse(JSON.stringify(this.state.stop));
+    newStop.image = e.target.value;
+
+    this.setState({
+      stop: newStop,
+    });
+  };
+
   render() {
     if (!this.props.loggedInUser) {
-      return <Redirect to="/sign-in" />;
+      return <Redirect to="/signin" />;
     }
     if (!this.state.stop) {
       return (
@@ -67,10 +105,21 @@ export default class EditStop extends React.Component {
         </div>
       );
     }
-    const { name, description } = this.state.stop;
+    const { name, description, startDate } = this.state.stop;
     return (
       <>
         <form>
+          <div class="form-group">
+            <label htmlFor="location">Location</label>
+            <input
+              type="text"
+              class="form-control"
+              onChange={this.handleLocationChange}
+              name="location"
+              id="location"
+              value={name}
+            />
+          </div>
           <div class="form-group">
             <label htmlFor="name">Name</label>
             <input
@@ -94,14 +143,25 @@ export default class EditStop extends React.Component {
             />
           </div>
           <div class="form-group">
-            <label htmlFor="description">Pictures</label>
+            <label htmlFor="startDate">Start date</label>
             <input
-              type="img"
+              type="date"
               class="form-control"
-              onChange={this.handleImgChange}
-              name="description"
-              id="description"
-              value={description}
+              onChange={this.handleDateChange}
+              name="startDate"
+              id="startDate"
+              value={startDate}
+            />
+          </div>
+          <div class="form-group">
+            <label htmlFor="image">Pictures</label>
+            <input
+              type="file"
+              class="form-control"
+              onChange={this.handleLocationChange}
+              name="image"
+              id="image"
+              value={name}
             />
           </div>
           <button
@@ -109,7 +169,7 @@ export default class EditStop extends React.Component {
             class="btn btn-primary"
             onClick={this.handleEditStop}
           >
-            Submit
+            Confirm change
           </button>
         </form>
       </>

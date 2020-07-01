@@ -1,10 +1,11 @@
 import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 import config from "../config";
 import { Redirect } from "react-router-dom";
 
-export default class StopDetails extends React.Component {
+class StopDetails extends React.Component {
   state = {
     stop: "",
   };
@@ -12,7 +13,7 @@ export default class StopDetails extends React.Component {
   componentDidMount() {
     let id = this.props.match.params.id;
     axios
-      .get(`${config.API_URL}/stops/${id}`, { withCredentials: true })
+      .get(`${config.API_URL}/stopDetails/${id}`, { withCredentials: true })
       .then((res) => {
         this.setState({
           stop: res.data,
@@ -20,7 +21,7 @@ export default class StopDetails extends React.Component {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          this.props.history.push("/sign-in");
+          this.props.history.push("/signin");
         }
       });
   }
@@ -34,14 +35,14 @@ export default class StopDetails extends React.Component {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          this.props.history.push("/sign-in");
+          this.props.history.push("/signin");
         }
       });
   };
 
   render() {
     if (!this.props.loggedInUser) {
-      return <Redirect to="/sign-in" />;
+      return <Redirect to="/signin" />;
     }
     if (!this.state.stop) {
       return (
@@ -60,7 +61,7 @@ export default class StopDetails extends React.Component {
         <p>{name}</p>
         <p>{description}</p>
         <button type="submit" className="btn btn-primary">
-          <Link to={`/stop/${id}/edit`}>Edit</Link>
+          <Link to={`/editStop/${id}`}>Edit</Link>
         </button>
         <button
           onClick={this.handleDeleteStop}
@@ -73,3 +74,5 @@ export default class StopDetails extends React.Component {
     );
   }
 }
+
+export default withRouter(StopDetails);

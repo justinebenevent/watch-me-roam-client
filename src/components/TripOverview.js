@@ -37,14 +37,41 @@ export default class TripOverview extends React.Component {
 
     return (
       <>
+        <div>
+          <Link to={"/createStop"}>
+            <button type="button" class="btn btn-outline-primary">
+              Create a new stop
+            </button>
+          </Link>
+        </div>
         {this.state.stops.map((stop, i) => {
           return (
-            <p key={i}>
-              <Link to={`/stopDetails/${stop._id}`}>{stop.name}</Link>
-            </p>
+            <div key={i} className="list-group">
+              <Link
+                className="list-group-item list-group-item-action"
+                to={`/stopDetails/${stop._id}`}
+              >
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">{stop.name}</h5>
+                  <small>
+                    {stop.startDate}
+                    {/* {new Intl.DateTimeFormat("en-GB", {
+                      year: "numeric",
+                      month: "long",
+                      day: "2-digit",
+                    }).format(stop.startDate)} */}
+                  </small>
+                </div>
+                <p class="mb-1">{stop.description}</p>
+                <small>{stop.location}</small>
+              </Link>
+            </div>
           );
         })}
       </>
     );
   }
 }
+//   <Link to={`/stopDetails/${stop._id}`}>
+//     {stop.name}, {stop.location}
+//   </Link>

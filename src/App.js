@@ -19,6 +19,7 @@ import TripOverview from "./components/TripOverview";
 class App extends Component {
   state = {
     trips: [],
+    stops: [],
     loggedInUser: null,
   };
 
@@ -68,17 +69,6 @@ class App extends Component {
     let description = e.target.description.value;
     let startDate = e.target.startDate.value;
 
-    // let myImage = e.target.image.files[0];
-
-    // let uploadData = new FormData();
-    // uploadData.append("imageUrl", myImage);
-
-    // //cloudinary request
-    // axios.post(`${config.API_URL}/upload`, uploadData).then((res) => {
-    //   console.log(res);
-    //   //Send the image to server here if needed with any other axios call
-    // });
-
     axios
       .post(
         `${config.API_URL}/createTrip`,
@@ -99,6 +89,51 @@ class App extends Component {
           }
         );
         // this.setState({} , function)
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          this.props.history.push("/signin");
+        }
+      });
+  };
+  handleCreateStop = (e) => {
+    e.preventDefault();
+    let location = e.target.location.value;
+    let name = e.target.name.value;
+    let description = e.target.description.value;
+    let startDate = e.target.startDate.value;
+    let image = e.target.image.files[0];
+
+    let uploadData = new FormData();
+    uploadData.append("imageUrl", image);
+
+    //cloudinary request
+    axios.post(`${config.API_URL}/upload`, uploadData).then((res) => {
+      console.log(res);
+      //Send the image to server here if needed with any other axios call
+    });
+
+    axios
+      .post(
+        `${config.API_URL}/createStop`,
+        {
+          location: location,
+          name: name,
+          description: description,
+          startDate: startDate,
+          image: image,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        this.setState(
+          {
+            stops: [...this.state.stops, res.data],
+          },
+          () => {
+            this.props.history.push("/tripOverview/:trip_id");
+          }
+        );
       })
       .catch((err) => {
         if (err.response.status === 401) {
@@ -210,8 +245,6 @@ class App extends Component {
           onLogout={this.handleLogout}
         />
         <div className="App">
-          <h1>Watch me roam</h1>
-
           <Switch>
             <Route exact path="/">
               <Landing />
@@ -246,14 +279,19 @@ class App extends Component {
                 return <EditTrip loggedInUser={loggedInUser} />;
               }}
             />
-
+            <Route
+              path="/editStop/:id"
+              render={() => {
+                return <EditStop loggedInUser={loggedInUser} />;
+              }}
+            />
             <Route
               path="/CreateStop"
               render={() => {
                 return (
                   <CreateStop
                     loggedInUser={loggedInUser}
-                    onAdd={this.handleAddStop}
+                    onAdd={this.handleCreateStop}
                   />
                 );
               }}
