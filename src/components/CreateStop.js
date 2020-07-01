@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 
-export default function CreateTrip(props) {
+export default function CreateStop(props) {
   if (!props.loggedInUser) {
     return <Redirect to="/signin" />;
   }

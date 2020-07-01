@@ -3,7 +3,7 @@ import React, { Component } from "react";
 export default class Landing extends Component {
   render() {
     return (
-      <div class="landing">
+      <div className="landing">
         {/* <div>
           <img src="../../public/bg-picture.jpg" alt="background"></img>
         </div> */}

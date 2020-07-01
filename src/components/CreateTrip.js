@@ -23,6 +23,16 @@ export default function CreateTrip(props) {
           />
         </div>
 
+        <div className="form-group">
+          <label for="startDate">Start date</label>
+          <input
+            type="date"
+            className="form-control"
+            name="startDate"
+            id="startDate"
+          />
+        </div>
+
         <button type="submit" className="btn btn-primary">
           Create
         </button>

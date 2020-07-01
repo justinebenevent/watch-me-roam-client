@@ -9,7 +9,7 @@ export default class Home extends React.Component {
   };
   getTrips = () => {
     axios
-      .get(`${config.API_URL}/home`)
+      .get(`${config.API_URL}/home`, { withCredentials: true })
       .then((res) => {
         this.setState({
           trips: res.data,
@@ -31,15 +31,15 @@ export default class Home extends React.Component {
         <div>
           <Link to={"/createtrip"}>link to createTrip</Link>
         </div>
-        {this.state !== null && this.state.failedToLoad ? (
+        {!this.state.trips.length && this.state.failedToLoad ? (
           <p>No trips yet</p>
         ) : null}
 
-        {!this.state || !this.state.trips
+        {this.state.trips.length
           ? this.state.trips.map((trip, i) => {
               return (
                 <p key={i}>
-                  <Link to={`/home/${trip._id}`}>{trip.name}</Link>
+                  <Link to={`/tripOverview/${trip._id}`}>{trip.name}</Link>
                 </p>
               );
             })

@@ -50,7 +50,7 @@ class App extends Component {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          this.props.history.push("/signin");
+          //this.props.history.push("/signin");
         }
       });
   }
@@ -66,17 +66,18 @@ class App extends Component {
     e.preventDefault();
     let name = e.target.name.value;
     let description = e.target.description.value;
+    let startDate = e.target.startDate.value;
 
-    let myImage = e.target.image.files[0];
+    // let myImage = e.target.image.files[0];
 
-    let uploadData = new FormData();
-    uploadData.append("imageUrl", myImage);
+    // let uploadData = new FormData();
+    // uploadData.append("imageUrl", myImage);
 
-    //cloudinary request
-    axios.post(`${config.API_URL}/upload`, uploadData).then((res) => {
-      console.log(res);
-      //Send the image to server here if needed with any other axios call
-    });
+    // //cloudinary request
+    // axios.post(`${config.API_URL}/upload`, uploadData).then((res) => {
+    //   console.log(res);
+    //   //Send the image to server here if needed with any other axios call
+    // });
 
     axios
       .post(
@@ -84,6 +85,7 @@ class App extends Component {
         {
           name: name,
           description: description,
+          startDate: startDate,
         },
         { withCredentials: true }
       )
@@ -93,7 +95,7 @@ class App extends Component {
             trips: [...this.state.trips, res.data],
           },
           () => {
-            this.props.history.push("/");
+            this.props.history.push("/home");
           }
         );
         // this.setState({} , function)
@@ -145,10 +147,14 @@ class App extends Component {
     let password = e.target.password.value;
 
     axios
-      .post(`${config.API_URL}/signin`, {
-        email: email,
-        password: password,
-      })
+      .post(
+        `${config.API_URL}/signin`,
+        {
+          email: email,
+          password: password,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
         this.setState(
           {
@@ -218,7 +224,7 @@ class App extends Component {
               }}
             />
             <Route
-              path="/CreateTrip"
+              path="/createTrip"
               render={() => {
                 return (
                   <CreateTrip
@@ -226,6 +232,12 @@ class App extends Component {
                     onAdd={this.handleCreateTrip}
                   />
                 );
+              }}
+            />
+            <Route
+              path="/tripOverview/:trip_id"
+              render={() => {
+                return <TripOverview loggedInUser={loggedInUser} />;
               }}
             />
             <Route
@@ -248,7 +260,7 @@ class App extends Component {
             />
             <Route
               exact
-              path="/stop/:id"
+              path="/stopDetails/:id"
               render={() => {
                 return (
                   <StopDetails

@@ -3,10 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import config from "../config";
 
-export default class Home extends React.Component {
+export default class TripOverview extends React.Component {
+  state = {
+    stops: [],
+  };
+
   getStops = () => {
     axios
-      .get(`${config.API_URL}/home`)
+      .get(`${config.API_URL}/tripOverview`, { withCredentials: true })
       .then((res) => {
         this.setState({
           stops: res.data,
@@ -23,11 +27,11 @@ export default class Home extends React.Component {
     this.getStops();
   }
   render() {
-    if (this.state !== null && this.state.failedToLoad) {
+    if (this.state.failedToLoad) {
       return <p>Failed to load</p>;
     }
     //if there is no state, or if there is a state but no stops
-    if (!this.state || !this.state.stops) {
+    if (!this.state.stops.length) {
       return <p>...Loading</p>;
     }
 
@@ -36,7 +40,7 @@ export default class Home extends React.Component {
         {this.state.stops.map((stop, i) => {
           return (
             <p key={i}>
-              <Link to={`/home/${stop._id}`}>{stop.name}</Link>
+              <Link to={`/stopDetails/${stop._id}`}>{stop.name}</Link>
             </p>
           );
         })}
