@@ -199,6 +199,10 @@ class App extends Component {
     console.log(loggedInUser);
     return (
       <>
+        <NavBar
+          loggedInUser={this.state.loggedInUser}
+          onLogout={this.handleLogout}
+        />
         <div className="App">
           <h1>Watch me roam</h1>
 
