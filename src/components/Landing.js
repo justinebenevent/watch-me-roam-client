@@ -3,10 +3,10 @@ import React, { Component } from "react";
 export default class Landing extends Component {
   render() {
     return (
-      <div>
-        <div>
+      <div class="landing">
+        {/* <div>
           <img src="../../public/bg-picture.jpg" alt="background"></img>
-        </div>
+        </div> */}
         <a href="/signup">
           <button type="button" class="btn btn-outline-dark">
             Sign up

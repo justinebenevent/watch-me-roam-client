@@ -4,6 +4,9 @@ import axios from "axios";
 import config from "../config";
 
 export default class Home extends React.Component {
+  state = {
+    trips: [],
+  };
   getTrips = () => {
     axios
       .get(`${config.API_URL}/home`)
@@ -23,23 +26,24 @@ export default class Home extends React.Component {
     this.getTrips();
   }
   render() {
-    if (this.state !== null && this.state.failedToLoad) {
-      return <p>Failed to load</p>;
-    }
-    //if there is no state, or if there is a state but no trips
-    if (!this.state || !this.state.trips) {
-      return <p>...Loading</p>;
-    }
-
     return (
       <>
-        {this.state.trips.map((trip, i) => {
-          return (
-            <p key={i}>
-              <Link to={`/home/${trip._id}`}>{trip.name}</Link>
-            </p>
-          );
-        })}
+        <div>
+          <Link to={"/createtrip"}>link to createTrip</Link>
+        </div>
+        {this.state !== null && this.state.failedToLoad ? (
+          <p>No trips yet</p>
+        ) : null}
+
+        {!this.state || !this.state.trips
+          ? this.state.trips.map((trip, i) => {
+              return (
+                <p key={i}>
+                  <Link to={`/home/${trip._id}`}>{trip.name}</Link>
+                </p>
+              );
+            })
+          : null}
       </>
     );
   }

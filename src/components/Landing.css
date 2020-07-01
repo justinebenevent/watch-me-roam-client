@@ -1,0 +1,7 @@
+landing {
+  margin: 0;
+  background-image: "../../public/bg-picture.jpg ";
+  background-size: cover;
+  height: 100vh;
+  /* vh is there so the size of the app is the same than the window/body size */
+}

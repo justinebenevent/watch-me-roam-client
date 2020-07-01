@@ -26,9 +26,6 @@ export default function Signin(props) {
       <a href="/">
         <button>Back to landing</button>
       </a>
-      <a href="/home">
-        <button>Home</button>
-      </a>
     </>
   );
 }

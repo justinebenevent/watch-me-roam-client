@@ -22,20 +22,120 @@ class App extends Component {
     loggedInUser: null,
   };
 
-  getTrips = () => {
+  // getTrips = () => {
+  //   axios
+  //     .get(`${config.API_URL}/home`)
+  //     .then((res) => {
+  //       this.setState({
+  //         trips: res.data,
+  //       });
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       //the request was unauthorized
+  //       if (err.response.status === 401) {
+  //         this.props.history.push("/signin");
+  //       }
+  //     });
+  // };
+
+  getUser() {
     axios
-      .get(`${config.API_URL}/home`)
+      .get(`${config.API_URL}/user`, { withCredentials: true })
       .then((res) => {
+        console.log("hello");
         this.setState({
-          trips: res.data,
+          loggedInUser: res.data,
         });
-        console.log(res);
       })
       .catch((err) => {
-        //the request was unauthorized
         if (err.response.status === 401) {
           this.props.history.push("/signin");
         }
+      });
+  }
+
+  componentDidMount() {
+    // this.getTrips();
+    if (!this.state.loggedInUser) {
+      this.getUser();
+    }
+  }
+
+  handleCreateTrip = (e) => {
+    e.preventDefault();
+    let name = e.target.name.value;
+    let description = e.target.description.value;
+
+    let myImage = e.target.image.files[0];
+
+    let uploadData = new FormData();
+    uploadData.append("imageUrl", myImage);
+
+    //cloudinary request
+    axios.post(`${config.API_URL}/upload`, uploadData).then((res) => {
+      console.log(res);
+      //Send the image to server here if needed with any other axios call
+    });
+
+    axios
+      .post(
+        `${config.API_URL}/createTrip`,
+        {
+          name: name,
+          description: description,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        this.setState(
+          {
+            trips: [...this.state.trips, res.data],
+          },
+          () => {
+            this.props.history.push("/");
+          }
+        );
+        // this.setState({} , function)
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          this.props.history.push("/signin");
+        }
+      });
+  };
+
+  handleDelete = (id) => {
+    //filter trips
+    let newTrips = this.state.trips.filter((trip) => {
+      return trip._id !== id;
+    });
+
+    this.setState(
+      {
+        trips: newTrips,
+      },
+      () => {
+        this.props.history.push("/");
+      }
+    );
+    console.log(this.state.trips);
+  };
+
+  handleLogout = () => {
+    //console.log(document.cookie)
+    axios
+      .post(`${config.API_URL}/logout`, {}, { withCredentials: true })
+      .then((res) => {
+        console.log(res);
+        this.setState(
+          {
+            loggedInUser: null,
+          },
+          () => {
+            this.props.history.push("/");
+          }
+        );
       });
   };
 
@@ -55,7 +155,7 @@ class App extends Component {
             loggedInUser: res.data,
           },
           () => {
-            this.props.history.push("/");
+            this.props.history.push("/home");
           }
         );
       });
@@ -88,14 +188,15 @@ class App extends Component {
       });
   };
 
-  componentDidUpdate() {
-    if (!window.location.href.includes("signin")) {
-      this.getTrips();
-    }
-  }
+  // componentDidUpdate() {
+  //   if (!window.location.href.includes("signin")) {
+  //     this.getTrips();
+  //   }
+  // }
 
   render() {
     const { loggedInUser } = this.state;
+    console.log(loggedInUser);
     return (
       <>
         <div className="App">
@@ -106,6 +207,60 @@ class App extends Component {
               <Landing />
             </Route>
             <Route
+              exact
+              path="/home"
+              render={() => {
+                return <Home trips={this.state.trips} />;
+              }}
+            />
+            <Route
+              path="/CreateTrip"
+              render={() => {
+                return (
+                  <CreateTrip
+                    loggedInUser={loggedInUser}
+                    onAdd={this.handleCreateTrip}
+                  />
+                );
+              }}
+            />
+            <Route
+              path="/editTrip/:id"
+              render={() => {
+                return <EditTrip loggedInUser={loggedInUser} />;
+              }}
+            />
+
+            <Route
+              path="/CreateStop"
+              render={() => {
+                return (
+                  <CreateStop
+                    loggedInUser={loggedInUser}
+                    onAdd={this.handleAddStop}
+                  />
+                );
+              }}
+            />
+            <Route
+              exact
+              path="/stop/:id"
+              render={() => {
+                return (
+                  <StopDetails
+                    loggedInUser={loggedInUser}
+                    afterDelete={this.handleDelete}
+                  />
+                );
+              }}
+            />
+            <Route
+              path="/editStop/:id"
+              render={() => {
+                return <EditTrip loggedInUser={loggedInUser} />;
+              }}
+            />
+            <Route
               path="/signin"
               render={() => {
                 return <SignIn onSignIn={this.handleSignIn} />;
@@ -115,12 +270,6 @@ class App extends Component {
               path="/signup"
               render={() => {
                 return <SignUp onSignUp={this.handleSignUp} />;
-              }}
-            />
-            <Route
-              path="/home"
-              render={() => {
-                return <Home />;
               }}
             />
           </Switch>
