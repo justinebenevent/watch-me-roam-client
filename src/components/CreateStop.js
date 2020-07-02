@@ -1,13 +1,24 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router";
 
-export default function CreateStop(props) {
+function CreateStop(props) {
+  let tripId = window.location.pathname.split("/createStop/")[1];
   if (!props.loggedInUser) {
-    return <Redirect to="/signin" />;
+    return (
+      <div className="text-center">
+        <div className="spinner-border" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+      </div>
+    );
   }
   return (
     <>
-      <form onSubmit={props.onAdd}>
+      <form
+        onSubmit={(e) => {
+          props.onAdd(e, tripId);
+        }}
+      >
         <div className="form-group">
           <label htmlFor="location">Location</label>
           <input
@@ -50,3 +61,5 @@ export default function CreateStop(props) {
     </>
   );
 }
+
+export default withRouter(CreateStop);

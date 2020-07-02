@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
 import config from "../config";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router";
 
-export default class EditTrip extends React.Component {
+class EditTrip extends React.Component {
   state = {
     trip: "",
   };
@@ -21,6 +21,7 @@ export default class EditTrip extends React.Component {
 
   handleEditTrip = (e) => {
     e.preventDefault();
+
     let id = this.props.match.params.id;
     axios
       .patch(
@@ -32,9 +33,7 @@ export default class EditTrip extends React.Component {
         },
         { withCredentials: true }
       )
-      .then((res) => {
-        //redirect to App.js
-      });
+      .then((res) => {});
   };
 
   handleNameChange = (e) => {
@@ -65,8 +64,14 @@ export default class EditTrip extends React.Component {
   };
 
   render() {
-    if (!this.props.loggedInUser) {
-      return <Redirect to="/signin" />;
+    if (!this.props.loggedInUser || !this.state.stop) {
+      return (
+        <div className="text-center">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      );
     }
     if (!this.state.trip) {
       return (
@@ -126,3 +131,5 @@ export default class EditTrip extends React.Component {
     );
   }
 }
+
+export default withRouter(EditTrip);

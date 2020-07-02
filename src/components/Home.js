@@ -35,9 +35,12 @@ export default class Home extends React.Component {
         {this.state.trips.length
           ? this.state.trips.map((trip, i) => {
               return (
-                <p key={i}>
-                  <Link to={`/tripOverview/${trip._id}`}>{trip.name}</Link>
-                </p>
+                <div key={i} className="card" style={{ width: "#18rem" }}>
+                  <img src="..." class="card-img-top" alt="..." />
+                  <Link to={`/tripOverview/${trip._id}`}>
+                    <h5 class="card-title">{trip.name} </h5>
+                  </Link>
+                </div>
               );
             })
           : null}

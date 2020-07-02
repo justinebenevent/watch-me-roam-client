@@ -1,17 +1,18 @@
 import React from "react";
 import axios from "axios";
 import config from "../config";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router";
 
-export default class EditStop extends React.Component {
+class EditStop extends React.Component {
   state = {
     stop: "",
   };
 
   componentDidMount() {
-    let id = this.props.match.params.id;
+    console.log(this.props);
+    const id = this.props.match.params.id;
     axios
-      .get(`${config.API_URL}/stops/${id}`, { withCredentials: true })
+      .get(`${config.API_URL}/editStop/${id}`, { withCredentials: true })
       .then((res) => {
         this.setState({
           stop: res.data,
@@ -35,16 +36,8 @@ export default class EditStop extends React.Component {
           image: this.state.stop.image,
         },
         { withCredentials: true }
-
-        //cloudinary request
-        // .post(`${config.API_URL}/upload`, uploadData).then((res) => {
-        //     console.log(res);
-        //     //Send the image to server here if needed with any other axios call
-        //   });
       )
-      .then((res) => {
-        //redirect to App.js
-      });
+      .then((res) => {});
   };
 
   handleLocationChange = (e) => {
@@ -93,8 +86,14 @@ export default class EditStop extends React.Component {
   };
 
   render() {
-    if (!this.props.loggedInUser) {
-      return <Redirect to="/signin" />;
+    if (!this.props.loggedInUser || !this.state.stop) {
+      return (
+        <div className="text-center">
+          <div className="spinner-border" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      );
     }
     if (!this.state.stop) {
       return (
@@ -105,7 +104,7 @@ export default class EditStop extends React.Component {
         </div>
       );
     }
-    const { name, description, startDate } = this.state.stop;
+    const { location, name, description, startDate, image } = this.state.stop;
     return (
       <>
         <form>
@@ -117,7 +116,7 @@ export default class EditStop extends React.Component {
               onChange={this.handleLocationChange}
               name="location"
               id="location"
-              value={name}
+              value={location}
             />
           </div>
           <div class="form-group">
@@ -161,7 +160,7 @@ export default class EditStop extends React.Component {
               onChange={this.handleLocationChange}
               name="image"
               id="image"
-              value={name}
+              value={image}
             />
           </div>
           <button
@@ -176,3 +175,5 @@ export default class EditStop extends React.Component {
     );
   }
 }
+
+export default withRouter(EditStop);

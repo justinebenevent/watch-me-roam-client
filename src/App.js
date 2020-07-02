@@ -21,6 +21,7 @@ class App extends Component {
     trips: [],
     stops: [],
     loggedInUser: null,
+    currentTrip: "",
   };
 
   // getTrips = () => {
@@ -96,7 +97,7 @@ class App extends Component {
         }
       });
   };
-  handleCreateStop = (e) => {
+  handleCreateStop = (e, tripId) => {
     e.preventDefault();
     let location = e.target.location.value;
     let name = e.target.name.value;
@@ -110,36 +111,35 @@ class App extends Component {
     //cloudinary request
     axios.post(`${config.API_URL}/upload`, uploadData).then((res) => {
       console.log(res);
-      //Send the image to server here if needed with any other axios call
-    });
-
-    axios
-      .post(
-        `${config.API_URL}/createStop`,
-        {
-          location: location,
-          name: name,
-          description: description,
-          startDate: startDate,
-          image: image,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        this.setState(
+      axios
+        .post(
+          `${config.API_URL}/createStop`,
           {
-            stops: [...this.state.stops, res.data],
+            location: location,
+            name: name,
+            description: description,
+            startDate: startDate,
+            image: res.data.secure_url,
+            tripId,
           },
-          () => {
-            this.props.history.push("/tripOverview/:trip_id");
+          { withCredentials: true }
+        )
+        .then((res) => {
+          this.setState(
+            {
+              stops: [...this.state.stops, res.data],
+            },
+            () => {
+              this.props.history.push(`/tripOverview/${tripId}`);
+            }
+          );
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.props.history.push("/signin");
           }
-        );
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          this.props.history.push("/signin");
-        }
-      });
+        });
+    });
   };
 
   handleDelete = (id) => {
@@ -308,12 +308,7 @@ class App extends Component {
                 );
               }}
             />
-            <Route
-              path="/editStop/:id"
-              render={() => {
-                return <EditTrip loggedInUser={loggedInUser} />;
-              }}
-            />
+
             <Route
               path="/signin"
               render={() => {

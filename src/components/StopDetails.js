@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import config from "../config";
-import { Redirect } from "react-router-dom";
 
 class StopDetails extends React.Component {
   state = {
@@ -41,10 +40,7 @@ class StopDetails extends React.Component {
   };
 
   render() {
-    if (!this.props.loggedInUser) {
-      return <Redirect to="/signin" />;
-    }
-    if (!this.state.stop) {
+    if (!this.props.loggedInUser || !this.state.stop) {
       return (
         <div className="text-center">
           <div className="spinner-border" role="status">
@@ -53,20 +49,24 @@ class StopDetails extends React.Component {
         </div>
       );
     }
-    const { location, name, description } = this.state.stop;
+    const { location, name, description, startDate, image } = this.state.stop;
     let id = this.props.match.params.id;
     return (
       <>
         <p>{location}</p>
         <p>{name}</p>
         <p>{description}</p>
-        <button type="submit" className="btn btn-primary">
+        <p>{startDate}</p>
+        <img src={image} alt={`${image.name} `}></img>
+
+        <button type="submit" className="btn btn-primary btn-sm">
           <Link to={`/editStop/${id}`}>Edit</Link>
         </button>
+
         <button
           onClick={this.handleDeleteStop}
           type="submit"
-          className="btn btn-primary"
+          className="btn btn-secondary btn-sm"
         >
           Delete
         </button>
